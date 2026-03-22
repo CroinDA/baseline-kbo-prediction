@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+*.env
+venv/
+.venv/
+
+# Data
+data/raw/*.csv
+data/raw/*.parquet
+
+# Models
+models/saved/*.json
+models/saved/*.pkl
+
+# Logs
+logs/*.log
+logs/*.jsonl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+config/api_key.txt
