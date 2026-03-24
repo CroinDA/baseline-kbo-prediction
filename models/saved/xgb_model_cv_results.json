@@ -1,0 +1,54 @@
+{
+  "folds": [
+    {
+      "fold": 1,
+      "train_size": 356,
+      "val_size": 352,
+      "accuracy": 0.608,
+      "brier_score": 0.2382,
+      "log_loss": 0.6745,
+      "best_iteration": 500
+    },
+    {
+      "fold": 2,
+      "train_size": 708,
+      "val_size": 352,
+      "accuracy": 0.5653,
+      "brier_score": 0.2607,
+      "log_loss": 0.7297,
+      "best_iteration": 500
+    },
+    {
+      "fold": 3,
+      "train_size": 1060,
+      "val_size": 352,
+      "accuracy": 0.5909,
+      "brier_score": 0.2477,
+      "log_loss": 0.6925,
+      "best_iteration": 500
+    },
+    {
+      "fold": 4,
+      "train_size": 1412,
+      "val_size": 352,
+      "accuracy": 0.625,
+      "brier_score": 0.2295,
+      "log_loss": 0.6516,
+      "best_iteration": 500
+    },
+    {
+      "fold": 5,
+      "train_size": 1764,
+      "val_size": 352,
+      "accuracy": 0.5739,
+      "brier_score": 0.2593,
+      "log_loss": 0.7199,
+      "best_iteration": 500
+    }
+  ],
+  "mean_accuracy": 0.5926,
+  "mean_brier": 0.2471,
+  "mean_logloss": 0.6936,
+  "final_n_estimators": 500,
+  "model_path": "/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction/models/saved/xgb_model.json"
+}

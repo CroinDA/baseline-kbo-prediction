@@ -137,3 +137,33 @@ def load_model(save_name: str = "xgb_model") -> Optional[xgb.XGBClassifier]:
     model = xgb.XGBClassifier()
     model.load_model(str(model_path))
     return model
+
+
+if __name__ == "__main__":
+    import pandas as pd
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.StreamHandler()],
+    )
+
+    DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
+    parquet_path = DATA_DIR / "training_data.parquet"
+    csv_path = DATA_DIR / "training_data.csv"
+
+    if parquet_path.exists():
+        df = pd.read_parquet(parquet_path)
+    elif csv_path.exists():
+        df = pd.read_csv(csv_path)
+    else:
+        logger.error("학습 데이터 없음. 먼저 build_dataset.py 실행 필요.")
+        raise SystemExit(1)
+
+    feature_cols = GameFeatures.feature_names()
+    X = df[feature_cols].values
+    y = df["label"].values
+
+    logger.info("학습 데이터: %d행 × %d열", X.shape[0], X.shape[1])
+    model, results = train_model(X, y)
+    logger.info("학습 완료. 모델 저장: %s", results["model_path"])
