@@ -141,9 +141,9 @@ def _load_pitcher_data(years: list[int]) -> dict:
 
 
 def _load_team_ops(years: list[int]) -> dict:
-    """팀별 시즌 OPS 로드 → {(t_code, year): ops}
+    """팀별 시즌 OPS 로드 → {(t_code, year): wrc_approx}
 
-    API에 wRC+ 없음 → OPS를 대리 지표로 사용.
+    타자 개별 wRC+ 없을 때 폴백용.
     OPS × 130 ≈ wRC+ 근사 (리그 평균 OPS ~.730 → wRC+ 100).
     """
     team_ops = {}
@@ -159,12 +159,114 @@ def _load_team_ops(years: list[int]) -> dict:
             t_code = t.get("t_code")
             ops = t.get("OPS") or t.get("ops") or 0.730
             if t_code:
-                # OPS → wRC+ 근사 변환: (OPS / league_avg_OPS) × 100
                 wrc_approx = (float(ops) / 0.730) * 100.0
                 team_ops[(t_code, year)] = wrc_approx
 
     logger.info("팀 OPS→wRC+ 로드: %d팀-시즌", len(team_ops))
     return team_ops
+
+
+def _load_lineup_data(years: list[int]) -> dict:
+    """경기별 라인업 로드 → {s_no: {team_code: [players]}}
+
+    API 응답 구조: {"팀코드": [선수배열], "result_cd": 100, ...}
+    """
+    lineup_db = {}
+    for year in years:
+        f = DATA_DIR / f"lineups_{year}.json"
+        if not f.exists():
+            continue
+        data = json.loads(f.read_text())
+        for s_no_str, resp in data.items():
+            teams = {}
+            for key, val in resp.items():
+                if isinstance(val, list) and val:
+                    # key는 팀코드 문자열 (e.g., "3001")
+                    teams[int(key)] = val
+            if teams:
+                lineup_db[int(s_no_str)] = teams
+    logger.info("라인업 데이터 로드: %d경기", len(lineup_db))
+    return lineup_db
+
+
+def _load_batter_wrc(years: list[int]) -> dict:
+    """타자별 시즌 wRC+ 로드 → {(p_no, year): wrc_plus}
+
+    API 응답에서 wRCplus 필드를 우선 사용, 없으면 OPS→wRC+ 근사.
+    """
+    batter_db = {}
+    for year in years:
+        f = DATA_DIR / f"batter_seasons_{year}.json"
+        if not f.exists():
+            continue
+        data = json.loads(f.read_text())
+        for p_no_str, resp in data.items():
+            p_no = int(p_no_str)
+            wrc_plus = 100.0  # 리그 평균 폴백
+
+            # basic.list에서 해당 연도 레코드 검색
+            basic_list = resp.get("basic", {}).get("list", [])
+            basic_rec = _find_year_record(basic_list, year)
+
+            # deepen.list에서 검색 (wRCplus는 여기 있을 수 있음)
+            deepen_list = resp.get("deepen", {}).get("list", [])
+            deepen_rec = _find_year_record(deepen_list, year)
+
+            # 1순위: wRCplus 필드 (basic 또는 deepen)
+            if deepen_rec and deepen_rec.get("wRCplus"):
+                wrc_plus = float(deepen_rec["wRCplus"])
+            elif basic_rec and basic_rec.get("wRCplus"):
+                wrc_plus = float(basic_rec["wRCplus"])
+            elif basic_rec:
+                # 2순위: OPS → wRC+ 근사
+                ops = basic_rec.get("OPS") or basic_rec.get("ops")
+                if ops:
+                    wrc_plus = (float(ops) / 0.730) * 100.0
+
+            batter_db[(p_no, year)] = wrc_plus
+
+    logger.info("타자 wRC+ 로드: %d명-시즌", len(batter_db))
+    return batter_db
+
+
+def _build_lineup_wrc_list(
+    s_no: int,
+    team_code: int,
+    year: int,
+    lineup_db: dict,
+    batter_db: dict,
+) -> Optional[list[dict]]:
+    """특정 경기의 특정 팀 라인업 wRC+ 리스트를 생성.
+
+    Returns:
+        [{"batting_order": int, "wrc_plus": float}, ...] 또는 None (데이터 없음)
+    """
+    game_lineups = lineup_db.get(s_no)
+    if not game_lineups:
+        return None
+
+    players = game_lineups.get(team_code)
+    if not players:
+        return None
+
+    result = []
+    for p in players:
+        p_no = p.get("p_no")
+        order_raw = p.get("battingOrder", "5")
+        if not p_no:
+            continue
+        # 투수(P) 등 비숫자 타순은 건너뛰기
+        try:
+            order = int(order_raw)
+        except (ValueError, TypeError):
+            continue
+        wrc = batter_db.get((int(p_no), year), 100.0)
+        result.append({
+            "batting_order": order,
+            "wrc_plus": wrc,
+        })
+
+    return result if result else None
 
 
 def build_dataset(
@@ -198,6 +300,8 @@ def build_dataset(
 
     pitcher_db = _load_pitcher_data(years)
     team_wrc_db = _load_team_ops(years)
+    lineup_db = _load_lineup_data(years)
+    batter_db = _load_batter_wrc(years)
 
     # ── Elo 엔진 (처음부터 시뮬레이션) ──
     elo = EloEngine()
@@ -271,9 +375,14 @@ def build_dataset(
         away_rs = team_runs_scored[away] / a_games * 9 if a_games > 0 else 4.5
         away_ra = team_runs_allowed[away] / a_games * 9 if a_games > 0 else 4.5
 
-        # 팀 wRC+ (OPS 기반 근사)
+        # 팀 wRC+ (OPS 기반 근사 — 라인업 데이터 없을 때 폴백용)
         home_wrc = team_wrc_db.get((home, year), 100.0)
         away_wrc = team_wrc_db.get((away, year), 100.0)
+
+        # 실제 라인업 wRC+ (라인업+타자 데이터가 있으면 사용)
+        s_no = game.get("s_no")
+        home_lineup_wrc = _build_lineup_wrc_list(s_no, home, year, lineup_db, batter_db)
+        away_lineup_wrc = _build_lineup_wrc_list(s_no, away, year, lineup_db, batter_db)
 
         # 최근 10경기 승률
         home_recent = team_recent_results.get(home, [])
@@ -329,8 +438,8 @@ def build_dataset(
             away_sp_fip=away_sp_data["fip"],
             home_sp_k_bb=home_sp_data["k_bb"],
             away_sp_k_bb=away_sp_data["k_bb"],
-            home_lineup=None,
-            away_lineup=None,
+            home_lineup=home_lineup_wrc,
+            away_lineup=away_lineup_wrc,
             home_team_wrc=home_wrc,
             away_team_wrc=away_wrc,
             home_recent=home_recent,

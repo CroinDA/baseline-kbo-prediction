@@ -170,68 +170,72 @@ def get_sp_stats(p_no: int, year: int) -> dict:
         return {"fip": 4.50, "k_bb": 2.0}
 
 
-def get_lineup_wrc(s_no: int, year: int) -> tuple[list[dict], list[dict]]:
-    """경기 라인업에서 각 선수의 OPS→wRC+ 조회.
+def get_lineup_wrc(
+    s_no: int,
+    home_team: int,
+    away_team: int,
+    year: int,
+) -> tuple[list[dict], list[dict]]:
+    """경기 라인업에서 각 선수의 wRC+ 조회.
+
+    API 응답 구조: {"팀코드": [선수배열], "result_cd": 100, ...}
+    각 선수의 wRCplus를 playerSeason batting API에서 조회.
 
     Returns:
         (home_lineup, away_lineup) — 각각 [{"batting_order": int, "wrc_plus": float}, ...]
     """
     try:
         resp = get_game_lineup(s_no)
-        home_lineup = []
-        away_lineup = []
 
-        # API 응답 구조: {"list": [...], ...} 또는 {"home": [...], "away": [...]}
-        lineup_list = resp.get("list", [])
-        if not isinstance(lineup_list, list):
-            lineup_list = []
+        def _process_team(team_code: int) -> list[dict]:
+            # API 응답: {팀코드(문자열): [선수배열]}
+            players = resp.get(str(team_code), [])
+            if not isinstance(players, list):
+                return []
 
-        # home/away 분리된 구조도 확인
-        home_list = resp.get("home", lineup_list)
-        away_list = resp.get("away", [])
-
-        if not isinstance(home_list, list):
-            home_list = []
-        if not isinstance(away_list, list):
-            away_list = []
-
-        # 통합 리스트에서 homeAway 필드로 분리
-        if lineup_list and not away_list:
-            for p in lineup_list:
-                ha = p.get("homeAway", p.get("home_away", ""))
-                if str(ha).upper() in ("H", "HOME", "1"):
-                    home_list.append(p)
-                elif str(ha).upper() in ("A", "AWAY", "2"):
-                    away_list.append(p)
-
-        def _process_lineup(players: list[dict]) -> list[dict]:
             result = []
             for p in players:
-                p_no = p.get("p_no") or p.get("pNo")
-                order = p.get("battingOrder") or p.get("batting_order") or p.get("batOrder", 5)
+                p_no = p.get("p_no")
+                order_raw = p.get("battingOrder", "5")
                 if not p_no:
                     continue
-                # OPS 조회 → wRC+ 변환
+                # 투수(P) 등 비숫자 타순은 건너뛰기
+                try:
+                    order = int(order_raw)
+                except (ValueError, TypeError):
+                    continue
+                # 타자 시즌 기록 조회 → wRC+ 추출
+                wrc_plus = 100.0
                 try:
                     ps = get_player_season(p_no, m2="batting", year=year)
-                    ops = 0.730  # 리그 평균 폴백
-                    pl = ps.get("list", [])
-                    if isinstance(pl, list) and pl:
-                        ops = pl[0].get("OPS") or pl[0].get("ops") or 0.730
-                    bl = ps.get("basic", {}).get("list", [])
-                    if bl:
-                        ops = bl[0].get("OPS", ops) or ops
-                    wrc_plus = (float(ops) / 0.730) * 100.0
+                    basic_list = ps.get("basic", {}).get("list", [])
+                    deepen_list = ps.get("deepen", {}).get("list", [])
+
+                    basic_rec = _find_year_record(basic_list, year)
+                    deepen_rec = _find_year_record(deepen_list, year)
+
+                    # 1순위: wRCplus 필드
+                    if deepen_rec and deepen_rec.get("wRCplus"):
+                        wrc_plus = float(deepen_rec["wRCplus"])
+                    elif basic_rec and basic_rec.get("wRCplus"):
+                        wrc_plus = float(basic_rec["wRCplus"])
+                    elif basic_rec:
+                        # 2순위: OPS → wRC+ 근사
+                        ops = basic_rec.get("OPS") or basic_rec.get("ops")
+                        if ops:
+                            wrc_plus = (float(ops) / 0.730) * 100.0
                 except Exception:
-                    wrc_plus = 100.0
-                result.append({"batting_order": int(order), "wrc_plus": wrc_plus})
+                    pass
+
+                result.append({"batting_order": order, "wrc_plus": wrc_plus})
             return result
 
-        home_lineup = _process_lineup(home_list)
-        away_lineup = _process_lineup(away_list)
+        home_lineup = _process_team(home_team)
+        away_lineup = _process_team(away_team)
 
         if home_lineup:
-            logger.info("라인업 wRC+ 조회: 홈 %d명, 원정 %d명", len(home_lineup), len(away_lineup))
+            logger.info("라인업 wRC+ 조회: 홈 %d명, 원정 %d명",
+                        len(home_lineup), len(away_lineup))
 
         return home_lineup, away_lineup
 
@@ -331,7 +335,9 @@ def build_game_features(
     temp = max(-10.0, min(40.0, float(temp)))
 
     # 라인업 wRC+ (API 호출)
-    home_lineup, away_lineup = get_lineup_wrc(game["s_no"], year)
+    home_lineup, away_lineup = get_lineup_wrc(
+        game["s_no"], game["home_team"], game["away_team"], year
+    )
 
     # 휴식일 + 불펜 피로도
     target_dt = game.get("_datetime", datetime(year, game.get("_month", 3), game.get("_day", 28)))

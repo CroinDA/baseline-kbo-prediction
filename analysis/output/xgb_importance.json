@@ -1,42 +1,42 @@
 [
   {
-    "feature": "sp_k_bb_diff",
-    "importance": 0.116
+    "feature": "sp_fip_diff",
+    "importance": 0.1529
   },
   {
-    "feature": "sp_fip_diff",
-    "importance": 0.1156
+    "feature": "sp_k_bb_diff",
+    "importance": 0.1119
   },
   {
     "feature": "lineup_wrc_plus_diff",
-    "importance": 0.1096
+    "importance": 0.1065
   },
   {
     "feature": "elo_diff",
-    "importance": 0.1087
-  },
-  {
-    "feature": "rest_days_diff",
-    "importance": 0.0981
-  },
-  {
-    "feature": "home_pyth_diff",
-    "importance": 0.0955
-  },
-  {
-    "feature": "recent_10g_winpct_diff",
-    "importance": 0.0925
+    "importance": 0.098
   },
   {
     "feature": "bullpen_load_diff",
-    "importance": 0.0924
+    "importance": 0.0952
+  },
+  {
+    "feature": "home_pyth_diff",
+    "importance": 0.094
+  },
+  {
+    "feature": "recent_10g_winpct_diff",
+    "importance": 0.0913
   },
   {
     "feature": "temperature",
-    "importance": 0.0879
+    "importance": 0.0912
+  },
+  {
+    "feature": "rest_days_diff",
+    "importance": 0.086
   },
   {
     "feature": "is_night",
-    "importance": 0.0837
+    "importance": 0.073
   }
 ]
