@@ -29,7 +29,11 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def backfill_schedules(years: list[int]):
-    """연도별 전체 경기일정 수집 → schedules_{year}.json"""
+    """연도별 전체 경기일정 수집 → schedules_{year}.json
+
+    API 응답 형식: {"0401": [games], "0402": [games], ...}
+    월 단위로 조회 (일별 조회보다 효율적).
+    """
     for year in years:
         out_file = DATA_DIR / f"schedules_{year}.json"
         if out_file.exists():
@@ -40,16 +44,24 @@ def backfill_schedules(years: list[int]):
         all_games = []
 
         for month in range(3, 11):  # 3월~10월
-            for day in range(1, 32):
-                try:
-                    resp = get_game_schedule(year=year, month=month, day=day)
-                    date_list = resp.get("date", [])
-                    if date_list:
-                        for g in date_list:
-                            g["_date"] = f"{year}-{month:02d}-{day:02d}"
-                        all_games.extend(date_list)
-                except Exception as e:
-                    pass  # 존재하지 않는 날짜 무시
+            try:
+                resp = get_game_schedule(year=year, month=month)
+
+                # API 응답: {"0401": [games], "0402": [...], ...}
+                # result_cd, result_msg, update_time 키 제외
+                for date_key, games in resp.items():
+                    if not isinstance(games, list):
+                        continue  # result_cd 등 메타 필드 스킵
+                    for g in games:
+                        g["_date"] = f"{year}-{month:02d}-{date_key[2:]}"
+                        g["_year"] = year
+                    all_games.extend(games)
+
+                logger.info("  %d월: %d일치 데이터",
+                            month,
+                            sum(1 for k, v in resp.items() if isinstance(v, list)))
+            except Exception as e:
+                logger.warning("  %d월 수집 실패: %s", month, e)
 
         out_file.write_text(json.dumps(all_games, indent=2, ensure_ascii=False))
         logger.info("저장: %s (%d 경기)", out_file.name, len(all_games))
@@ -59,6 +71,7 @@ def backfill_boxscores(years: list[int]):
     """경기별 박스스코어 수집 → boxscores_{year}.json
 
     schedules 파일에서 s_no를 추출하여 개별 조회.
+    완료된 경기(state=3)만 대상.
     """
     for year in years:
         schedule_file = DATA_DIR / f"schedules_{year}.json"
@@ -72,7 +85,8 @@ def backfill_boxscores(years: list[int]):
             continue
 
         games = json.loads(schedule_file.read_text())
-        s_nos = list({g["s_no"] for g in games if g.get("s_no")})
+        # state=3 완료된 경기만 (미완료 경기는 박스스코어 없음)
+        s_nos = list({g["s_no"] for g in games if g.get("s_no") and g.get("state") == 3})
         s_nos.sort()
 
         logger.info("박스스코어 수집: %d (%d 경기)", year, len(s_nos))
@@ -81,8 +95,12 @@ def backfill_boxscores(years: list[int]):
         for i, s_no in enumerate(s_nos):
             try:
                 resp = get_game_boxscore(s_no)
-                resp["_s_no"] = s_no
-                boxscores.append(resp)
+                if resp.get("result_cd") == 100:
+                    resp["_s_no"] = s_no
+                    boxscores.append(resp)
+                else:
+                    logger.warning("박스스코어 API 실패 s_no=%d: %s",
+                                   s_no, resp.get("result_msg"))
             except Exception as e:
                 logger.warning("박스스코어 실패 s_no=%d: %s", s_no, e)
 
@@ -156,15 +174,6 @@ def backfill_pitcher_seasons(years: list[int]):
 
         out_file.write_text(json.dumps(pitcher_data, indent=2, ensure_ascii=False))
         logger.info("저장: %s (%d명)", out_file.name, len(pitcher_data))
-
-
-def backfill_batter_seasons(years: list[int]):
-    """팀별 타자 시즌 기록 (wRC+ 확보용) → batter_team_wrc_{year}.json
-
-    개인별 전수 조회는 비효율 → 팀 기록실의 타자 데이터 사용.
-    """
-    # team_records에서 이미 포함됨 — 별도 파일 불필요
-    logger.info("타자 wRC+는 team_records에서 추출 가능. 스킵.")
 
 
 def run_backfill(years: list[int] = None):

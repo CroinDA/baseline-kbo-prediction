@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.croinda.kbo-prediction</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/kwangjinpark/miniconda3/bin/python3</string>
+        <string>/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction/pipeline/daily_run.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction</string>
+
+    <!-- 매일 12:00 (14시 경기 2시간 전) + 17:30 (18시 경기 30분 전) -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>12</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>17</integer>
+            <key>Minute</key>
+            <integer>30</integer>
+        </dict>
+    </array>
+
+    <key>StandardOutPath</key>
+    <string>/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction/logs/launchd_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction/logs/launchd_stderr.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/kwangjinpark/miniconda3/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>PYTHONPATH</key>
+        <string>/Users/kwangjinpark/CroinDA HQ/baseline-kbo-prediction</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

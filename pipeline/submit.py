@@ -45,11 +45,11 @@ def submit_single(s_no: int, percent: float) -> dict:
     response = submit_prediction(s_no, percent)
     _log_submission(s_no, percent, response)
 
-    result_cd = response.get("result_cd") or response.get("cdoe")
-    if result_cd == 200:
+    result_cd = response.get("result_cd")
+    if result_cd == 100:
         logger.info("제출 성공: 경기 %d", s_no)
     else:
-        logger.error("제출 실패: 경기 %d — %s", s_no, response.get("result_msg"))
+        logger.error("제출 실패: 경기 %d — cd=%s, %s", s_no, result_cd, response.get("result_msg"))
 
     return response
 
@@ -72,8 +72,8 @@ def submit_batch(predictions: list[dict]) -> list[dict]:
             resp = submit_single(pred["s_no"], pred["percent"])
             results.append({"s_no": pred["s_no"], "response": resp})
 
-            result_cd = resp.get("result_cd") or resp.get("cdoe")
-            if result_cd == 200:
+            result_cd = resp.get("result_cd")
+            if result_cd == 100:
                 success += 1
             else:
                 fail += 1

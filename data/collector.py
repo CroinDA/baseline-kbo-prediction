@@ -1,6 +1,7 @@
 """
 스탯티즈 API 데이터 수집 모듈.
 
+인증: HMAC-SHA256 서명 (X-API-KEY + X-TIMESTAMP + X-SIGNATURE)
 22개 엔드포인트에 대한 래퍼 함수 제공.
 Rate limiting (1초 딜레이) 및 재시도 로직 포함.
 """
@@ -17,6 +18,7 @@ from config.api_config import (
     MAX_RETRIES,
     RETRY_BACKOFF_SEC,
     get_api_key,
+    generate_signature,
 )
 from config.constants import LEAGUE_REGULAR
 
@@ -34,15 +36,22 @@ def _request(
 ) -> dict[str, Any]:
     """공통 API 요청 함수.
 
-    Rate limiting + 재시도 + 에러 핸들링.
+    HMAC-SHA256 서명 + Rate limiting + 재시도 + 에러 핸들링.
     """
     global _last_request_time
 
-    url = BASE_URL + ENDPOINTS[endpoint_key]
+    endpoint_path = ENDPOINTS[endpoint_key]
+    url = BASE_URL + endpoint_path
     api_key = get_api_key()
 
+    # 서명 생성 (GET은 params, POST는 json_body 기반)
+    sign_params = params if method == "GET" else json_body
+    timestamp, signature = generate_signature(method, endpoint_path, sign_params)
+
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "X-API-KEY": api_key,
+        "X-TIMESTAMP": timestamp,
+        "X-SIGNATURE": signature,
         "Content-Type": "application/json",
     }
 
@@ -54,6 +63,15 @@ def _request(
 
         try:
             _last_request_time = time.time()
+
+            # 재시도 시 타임스탬프/서명 갱신
+            if attempt > 1:
+                timestamp, signature = generate_signature(
+                    method, endpoint_path, sign_params
+                )
+                headers["X-TIMESTAMP"] = timestamp
+                headers["X-SIGNATURE"] = signature
+
             if method == "GET":
                 resp = requests.get(url, headers=headers, params=params, timeout=30)
             else:
@@ -62,10 +80,11 @@ def _request(
             resp.raise_for_status()
             data = resp.json()
 
-            # API 자체 에러 코드 확인
-            if data.get("result_cd") and data["result_cd"] != 200:
+            # API 자체 에러 코드 확인 (100=성공)
+            result_cd = data.get("result_cd")
+            if result_cd and result_cd != 100:
                 logger.warning(
-                    "API 에러: %s — %s", data.get("result_cd"), data.get("result_msg")
+                    "API 응답 코드: %s — %s", result_cd, data.get("result_msg")
                 )
 
             return data

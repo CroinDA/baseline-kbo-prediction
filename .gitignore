@@ -36,3 +36,4 @@ Thumbs.db
 
 # Secrets
 config/api_key.txt
+config/api_secret.txt

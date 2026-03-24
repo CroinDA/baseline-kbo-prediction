@@ -11,6 +11,7 @@
 import sys
 import json
 import logging
+from datetime import datetime, timedelta
 from pathlib import Path
 from collections import defaultdict
 from typing import Optional
@@ -26,6 +27,7 @@ from config.constants import (
     ROLLING_WINDOW_RECENT,
     BULLPEN_LOAD_DAYS,
     FIP_CONSTANT_DEFAULT,
+    LEAGUE_REGULAR,
 )
 from elo.engine import EloEngine
 from features.builder import FeatureBuilder, GameFeatures
@@ -36,7 +38,12 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 
 def _parse_schedules(years: list[int]) -> list[dict]:
-    """연도별 일정 파일에서 완료된 경기만 시간순 정렬하여 반환."""
+    """연도별 일정 파일에서 완료된 정규시즌 경기만 시간순 정렬하여 반환.
+
+    스케줄 파일 형식: [{game}, {game}, ...] (backfill에서 flatten 저장)
+    완료 경기: homeScore != null AND awayScore != null
+    정규시즌만: leagueType == 10100 (시범경기 10400 제외)
+    """
     all_games = []
 
     for year in years:
@@ -46,20 +53,46 @@ def _parse_schedules(years: list[int]) -> list[dict]:
             continue
         games = json.loads(f.read_text())
         for g in games:
+            # 정규시즌만 (leagueType=10100). 시범경기(10400) 제외
+            if g.get("leagueType") != LEAGUE_REGULAR:
+                continue
             # 경기 완료 (점수가 있는 경기만)
             if g.get("homeScore") is not None and g.get("awayScore") is not None:
-                g["_year"] = year
+                g["_year"] = int(g.get("year", year))
+                # gameDate는 unix timestamp (초 단위)
                 g["_sort_key"] = g.get("gameDate", 0)
+                # 날짜 변환 (rest_days / bullpen_load 계산용)
+                gd = g.get("gameDate", 0)
+                if gd > 0:
+                    g["_date"] = datetime.fromtimestamp(gd).date()
+                else:
+                    g["_date"] = None
                 all_games.append(g)
 
     # 시간순 정렬
     all_games.sort(key=lambda x: (x["_year"], x["_sort_key"], x.get("s_no", 0)))
-    logger.info("완료된 경기 총 %d개 (years=%s)", len(all_games), years)
+    logger.info("완료된 정규시즌 경기 총 %d개 (years=%s)", len(all_games), years)
     return all_games
 
 
+def _find_year_record(records: list[dict], year: int) -> Optional[dict]:
+    """리스트에서 해당 연도 레코드를 찾아 반환.
+
+    API year 필드가 문자열("2023") 또는 정수(2023)일 수 있으므로 둘 다 비교.
+    """
+    for rec in records:
+        rec_year = rec.get("year")
+        if rec_year is not None and str(rec_year) == str(year):
+            return rec
+    return None
+
+
 def _load_pitcher_data(years: list[int]) -> dict:
-    """투수 시즌 기록 로드 → {(p_no, year): {"fip": float, "k_bb": float}}"""
+    """투수 시즌 기록 로드 → {(p_no, year): {"fip": float, "k_bb": float}}
+
+    API 응답 구조: basic.list = [{year:2023,...}, {year:2024,...}, ...]
+    → 반드시 해당 year 레코드를 찾아서 사용. [0]으로 접근 금지!
+    """
     pitcher_db = {}
     for year in years:
         f = DATA_DIR / f"pitcher_seasons_{year}.json"
@@ -68,26 +101,52 @@ def _load_pitcher_data(years: list[int]) -> dict:
         data = json.loads(f.read_text())
         for p_no_str, resp in data.items():
             p_no = int(p_no_str)
-            basic_list = resp.get("basic", {}).get("list", [])
-            deepen_list = resp.get("deepen", {}).get("list", [])
 
             fip = 4.50
             k_bb = 2.0
 
-            if basic_list:
-                fip = basic_list[0].get("FIP", 4.50) or 4.50
-            if deepen_list:
-                k_bb = deepen_list[0].get("KBB", 2.0) or 2.0
+            # basic/deepen 구조 (해당 year 레코드만 추출)
+            basic_list = resp.get("basic", {}).get("list", [])
+            deepen_list = resp.get("deepen", {}).get("list", [])
 
-            pitcher_db[(p_no, year)] = {"fip": fip, "k_bb": k_bb}
+            basic_rec = _find_year_record(basic_list, year)
+            deepen_rec = _find_year_record(deepen_list, year)
+
+            if basic_rec:
+                fip = float(basic_rec.get("FIP") or basic_rec.get("fip") or 4.50)
+                # K/BB: SO / BB
+                so = float(basic_rec.get("SO") or basic_rec.get("K") or 0)
+                bb = float(basic_rec.get("BB") or 1)
+                if bb > 0 and so > 0:
+                    k_bb = so / bb
+            if deepen_rec:
+                k_bb = float(deepen_rec.get("KBB", k_bb) or k_bb)
+
+            # fallback: 최상위 list 구조
+            if not basic_rec:
+                main_list = resp.get("list", [])
+                if isinstance(main_list, list):
+                    main_rec = _find_year_record(main_list, year)
+                    if main_rec:
+                        fip = float(main_rec.get("FIP") or main_rec.get("fip") or fip)
+                        so = float(main_rec.get("SO") or main_rec.get("K") or 0)
+                        bb = float(main_rec.get("BB") or 1)
+                        if bb > 0 and so > 0:
+                            k_bb = so / bb
+
+            pitcher_db[(p_no, year)] = {"fip": float(fip), "k_bb": float(k_bb)}
 
     logger.info("투수 데이터 로드: %d명-시즌", len(pitcher_db))
     return pitcher_db
 
 
-def _load_team_wrc(years: list[int]) -> dict:
-    """팀별 시즌 wRC+ 로드 → {(t_code, year): wrc_plus}"""
-    team_wrc = {}
+def _load_team_ops(years: list[int]) -> dict:
+    """팀별 시즌 OPS 로드 → {(t_code, year): ops}
+
+    API에 wRC+ 없음 → OPS를 대리 지표로 사용.
+    OPS × 130 ≈ wRC+ 근사 (리그 평균 OPS ~.730 → wRC+ 100).
+    """
+    team_ops = {}
     for year in years:
         f = DATA_DIR / f"team_records_{year}.json"
         if not f.exists():
@@ -95,18 +154,17 @@ def _load_team_wrc(years: list[int]) -> dict:
         data = json.loads(f.read_text())
         batting = data.get("batting", {})
         team_list = batting.get("list", [])
-        if not team_list:
-            # 중첩 구조 대응
-            team_list = batting.get("data", batting.get("teams", []))
 
         for t in team_list if isinstance(team_list, list) else []:
             t_code = t.get("t_code")
-            wrc = t.get("wRCplus", t.get("wrc_plus", 100.0))
+            ops = t.get("OPS") or t.get("ops") or 0.730
             if t_code:
-                team_wrc[(t_code, year)] = wrc or 100.0
+                # OPS → wRC+ 근사 변환: (OPS / league_avg_OPS) × 100
+                wrc_approx = (float(ops) / 0.730) * 100.0
+                team_ops[(t_code, year)] = wrc_approx
 
-    logger.info("팀 wRC+ 로드: %d팀-시즌", len(team_wrc))
-    return team_wrc
+    logger.info("팀 OPS→wRC+ 로드: %d팀-시즌", len(team_ops))
+    return team_ops
 
 
 def build_dataset(
@@ -139,7 +197,7 @@ def build_dataset(
         return pd.DataFrame()
 
     pitcher_db = _load_pitcher_data(years)
-    team_wrc_db = _load_team_wrc(years)
+    team_wrc_db = _load_team_ops(years)
 
     # ── Elo 엔진 (처음부터 시뮬레이션) ──
     elo = EloEngine()
@@ -150,7 +208,8 @@ def build_dataset(
     team_runs_allowed = defaultdict(float)    # 누적 실점
     team_games = defaultdict(int)             # 누적 경기 수
     team_recent_results = defaultdict(list)   # 최근 경기 결과 [True/False, ...]
-    team_bullpen_daily_ip = defaultdict(lambda: defaultdict(float))  # team → date → ip
+    team_last_game_date = {}                  # 팀별 마지막 경기 날짜
+    team_game_dates = defaultdict(list)       # 팀별 경기 날짜 리스트 (bullpen_load용)
 
     # ── 시즌 경계 감지 ──
     prev_year = None
@@ -175,7 +234,8 @@ def build_dataset(
             team_runs_allowed.clear()
             team_games.clear()
             team_recent_results.clear()
-            team_bullpen_daily_ip.clear()
+            team_last_game_date.clear()
+            team_game_dates.clear()
         prev_year = year
 
         # ── 경기 이전 시점의 피처 생성 ──
@@ -184,13 +244,13 @@ def build_dataset(
         home_sp_data = pitcher_db.get((home_sp, year), {"fip": 4.50, "k_bb": 2.0})
         away_sp_data = pitcher_db.get((away_sp, year), {"fip": 4.50, "k_bb": 2.0})
 
-        # SP Elo 보정용 (간략화: FIP 기반)
+        # SP Elo 보정용 (FIP 기반)
         if home_sp:
             elo.update_sp_rating(home_sp, home, home_sp_data["fip"])
         if away_sp:
             elo.update_sp_rating(away_sp, away, away_sp_data["fip"])
 
-        # 팀 투수 평균 (간략화: 리그 평균 사용)
+        # 팀 투수 평균 (리그 평균 사용)
         elo.update_team_sp_avg(home, 4.20)
         elo.update_team_sp_avg(away, 4.20)
 
@@ -211,7 +271,7 @@ def build_dataset(
         away_rs = team_runs_scored[away] / a_games * 9 if a_games > 0 else 4.5
         away_ra = team_runs_allowed[away] / a_games * 9 if a_games > 0 else 4.5
 
-        # 팀 wRC+
+        # 팀 wRC+ (OPS 기반 근사)
         home_wrc = team_wrc_db.get((home, year), 100.0)
         away_wrc = team_wrc_db.get((away, year), 100.0)
 
@@ -219,17 +279,46 @@ def build_dataset(
         home_recent = team_recent_results.get(home, [])
         away_recent = team_recent_results.get(away, [])
 
-        # 불펜 피로도 (간략화: 누적 데이터 없는 초기 버전에서는 0)
-        home_bp = []
-        away_bp = []
+        # 불펜 피로도: 최근 3일 내 경기 수 (일정 밀도 프록시)
+        game_date = game.get("_date")
+        if game_date:
+            home_bp_games = sum(
+                1 for d in team_game_dates.get(home, [])
+                if 0 < (game_date - d).days <= BULLPEN_LOAD_DAYS
+            )
+            away_bp_games = sum(
+                1 for d in team_game_dates.get(away, [])
+                if 0 < (game_date - d).days <= BULLPEN_LOAD_DAYS
+            )
+            # 경기당 평균 불펜 이닝 ~3.0IP로 환산
+            home_bp = [3.0] * home_bp_games
+            away_bp = [3.0] * away_bp_games
+        else:
+            home_bp = []
+            away_bp = []
 
-        # 휴식일 (간략화: 기본 1)
-        home_rest = 1
-        away_rest = 1
+        # 휴식일: 마지막 경기로부터의 일수
+        if game_date and home in team_last_game_date:
+            home_rest = (game_date - team_last_game_date[home]).days
+        else:
+            home_rest = 3  # 시즌 초 기본값 (연습경기 후)
+        if game_date and away in team_last_game_date:
+            away_rest = (game_date - team_last_game_date[away]).days
+        else:
+            away_rest = 3
 
-        # 기온
-        temp = game.get("temperature", 15.0) or 15.0
-        game_hour = int(str(game.get("hm", "1800"))[:2]) if game.get("hm") else 18
+        # 기온: 이상치 제거 (-10~40°C 클램핑)
+        temp = game.get("temperature") or 15.0
+        if temp == 0 or temp > 45 or temp < -15:
+            temp = 15.0
+        temp = max(-10.0, min(40.0, float(temp)))
+
+        # hm 파싱: "18:30:00" 또는 "1800" 형식 모두 지원
+        hm = str(game.get("hm", "18:00:00"))
+        try:
+            game_hour = int(hm.split(":")[0]) if ":" in hm else int(hm[:2])
+        except (ValueError, IndexError):
+            game_hour = 18
 
         # 피처 빌드
         features = fb.build(
@@ -250,7 +339,7 @@ def build_dataset(
             away_bp_ip=away_bp,
             home_rest=home_rest,
             away_rest=away_rest,
-            temperature=temp,
+            temperature=float(temp),
             game_hour=game_hour,
         )
 
@@ -279,6 +368,13 @@ def build_dataset(
 
         team_recent_results[home].append(home_score > away_score)
         team_recent_results[away].append(away_score > home_score)
+
+        # 날짜 추적 갱신 (rest_days + bullpen_load용)
+        if game_date:
+            team_last_game_date[home] = game_date
+            team_last_game_date[away] = game_date
+            team_game_dates[home].append(game_date)
+            team_game_dates[away].append(game_date)
 
         if (i + 1) % 500 == 0:
             logger.info("  진행: %d/%d 경기 처리", i + 1, len(all_games))

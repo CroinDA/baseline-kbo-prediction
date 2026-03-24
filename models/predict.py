@@ -12,6 +12,7 @@ import xgboost as xgb
 
 from config.constants import (
     BLEND_SCHEDULE,
+    PRIOR_SCHEDULE,
     SUBMIT_FORBIDDEN,
     SUBMIT_MIN_PROB,
     SUBMIT_MAX_PROB,
@@ -32,6 +33,19 @@ def get_elo_weight(games_played: int) -> float:
         if games_played <= threshold:
             return weight
     return BLEND_SCHEDULE[-1][1]
+
+
+def get_prior_weight(games_played: int) -> float:
+    """시즌 초반 Prior 비중 (콜드 스타트 대응).
+
+    PRIOR_SCHEDULE: [(20, 0.70), (50, 0.50), (80, 0.30), (999, 0.20)]
+    시즌 초반에는 전시즌 Prior에 더 의존하고,
+    시즌이 진행될수록 현시즌 데이터 기반 예측에 의존.
+    """
+    for threshold, weight in PRIOR_SCHEDULE:
+        if games_played <= threshold:
+            return weight
+    return PRIOR_SCHEDULE[-1][1]
 
 
 def avoid_forbidden(prob: float, elo_direction: float) -> float:
@@ -91,21 +105,33 @@ def predict_game(
         # XGBoost 모델이 없으면 Elo만 사용
         xgb_prob_pct = elo_prob_pct
 
-    # ── 블렌딩 ──
+    # ── 블렌딩 (Elo + XGBoost) ──
     elo_weight = get_elo_weight(elo_engine.games_played)
     xgb_weight = 1.0 - elo_weight
 
     blended = elo_weight * elo_prob_pct + xgb_weight * xgb_prob_pct
 
+    # ── 콜드 스타트 Prior-Posterior 블렌딩 ──
+    # 시즌 초반에는 Prior(Elo 기반 사전 확률)에 더 의존
+    # Prior = Elo 순수 예측 (전시즌 데이터 기반, 안정적)
+    # Posterior = Elo+XGBoost 블렌딩 (현시즌 데이터 기반, 불안정)
+    prior_w = get_prior_weight(elo_engine.games_played)
+    prior_pct = elo_prob_pct  # Prior = Elo 확률 (전시즌 레이팅 기반)
+    posterior_pct = blended    # Posterior = Elo+XGBoost 블렌딩
+
+    final_pct = prior_w * prior_pct + (1.0 - prior_w) * posterior_pct
+
     logger.debug(
-        "Elo=%.2f%% (w=%.2f), XGB=%.2f%% (w=%.2f) → Blend=%.2f%%",
+        "Elo=%.2f%% (w=%.2f), XGB=%.2f%% (w=%.2f) → Blend=%.2f%%, "
+        "Prior=%.2f (w=%.2f) → Final=%.2f%%",
         elo_prob_pct, elo_weight, xgb_prob_pct, xgb_weight, blended,
+        prior_pct, prior_w, final_pct,
     )
 
     # ── 50.00% 회피 + 포맷팅 ──
-    result = avoid_forbidden(blended, elo_direction)
+    result = avoid_forbidden(final_pct, elo_direction)
 
-    return result
+    return float(result)
 
 
 def batch_predict(
