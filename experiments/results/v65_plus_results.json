@@ -1,0 +1,90 @@
+[
+  {
+    "label": "v65-baseline",
+    "features": 219,
+    "accuracy": 0.5592,
+    "tuned": 0.5801,
+    "threshold": 0.51,
+    "logloss": 0.6886
+  },
+  {
+    "label": "A: v65+compare",
+    "features": 229,
+    "accuracy": 0.5711,
+    "tuned": 0.5864,
+    "threshold": 0.486,
+    "logloss": 0.6852
+  },
+  {
+    "label": "B: v65+deadzone",
+    "features": 219,
+    "accuracy": 0.5677,
+    "tuned": 0.583,
+    "threshold": 0.501,
+    "logloss": 0.688
+  },
+  {
+    "label": "C: v65+compare+dz",
+    "features": 229,
+    "accuracy": 0.5677,
+    "tuned": 0.5864,
+    "threshold": 0.485,
+    "logloss": 0.6852
+  },
+  {
+    "label": "D: v65+isotonic",
+    "features": 219,
+    "accuracy": 0.562,
+    "tuned": 0.5637,
+    "threshold": 0.51,
+    "logloss": 1.2404
+  },
+  {
+    "label": "E: v65+iso+dz",
+    "features": 219,
+    "accuracy": 0.562,
+    "tuned": 0.5637,
+    "threshold": 0.51,
+    "logloss": 1.2404
+  },
+  {
+    "label": "F: v65+cmp+iso",
+    "features": 229,
+    "accuracy": 0.5649,
+    "tuned": 0.5671,
+    "threshold": 0.473,
+    "logloss": 1.1789
+  },
+  {
+    "label": "G1: depth6",
+    "features": 219,
+    "accuracy": 0.5586,
+    "tuned": 0.5745,
+    "threshold": 0.485,
+    "logloss": 0.6975
+  },
+  {
+    "label": "G2: depth4",
+    "features": 219,
+    "accuracy": 0.5507,
+    "tuned": 0.5643,
+    "threshold": 0.499,
+    "logloss": 0.7086
+  },
+  {
+    "label": "G3: high-reg",
+    "features": 219,
+    "accuracy": 0.5643,
+    "tuned": 0.5824,
+    "threshold": 0.483,
+    "logloss": 0.683
+  },
+  {
+    "label": "G4: wide-col",
+    "features": 219,
+    "accuracy": 0.5575,
+    "tuned": 0.5609,
+    "threshold": 0.496,
+    "logloss": 0.696
+  }
+]

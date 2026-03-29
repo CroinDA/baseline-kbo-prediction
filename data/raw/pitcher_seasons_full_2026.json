@@ -1,0 +1,1766 @@
+{
+  "10184": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10187": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10235": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10320": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10387": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10475": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10523": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10652": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10749": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10812": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11094": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11119": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11164": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11166": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11190": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11212": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11308": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11317": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11323": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11397": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12534": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12546": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12583": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12697": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12916": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13006": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13009": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13056": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13104": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13109": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13112": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13177": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14106": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14108": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14134": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14137": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14140": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14600": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14606": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14669": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14777": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14783": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14816": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15081": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15084": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15089": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15092": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15523": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15532": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16274": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16280": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16286": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16286,
+          "leagueType": 10100,
+          "t_code": "5002",
+          "p_name": "치리노스",
+          "year": "2026",
+          "p_nameEN": "Yonny Chirinos",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "1",
+          "S": "0",
+          "HD": "0",
+          "IP": 1,
+          "ER": "6",
+          "R": "6",
+          "TBF": "10",
+          "H": "6",
+          "2B": "1",
+          "3B": "0",
+          "HR": "0",
+          "BB": "1",
+          "HP": "0",
+          "IB": "0",
+          "SO": "0",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 54,
+          "FIP": 0,
+          "WHIP": 7,
+          "WAR": -0.32570736905280007,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16286,
+          "t_code": "5002",
+          "p_name": "치리노스",
+          "year": "2026",
+          "K9": 0,
+          "BB9": 9,
+          "KBB": "0.0000",
+          "HR9": 0,
+          "OBP": 0.7,
+          "SLG": 0.778,
+          "OPS": 1.478
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16404": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16435": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16437": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16447": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16447,
+          "leagueType": 10100,
+          "t_code": "12001",
+          "p_name": "사우어",
+          "year": "2026",
+          "p_nameEN": "Matt Sauer",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "1",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 5,
+          "ER": "3",
+          "R": "3",
+          "TBF": "24",
+          "H": "5",
+          "2B": "0",
+          "3B": "0",
+          "HR": "1",
+          "BB": "5",
+          "HP": "0",
+          "IB": "0",
+          "SO": "1",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 5.4,
+          "FIP": 0,
+          "WHIP": 2,
+          "WAR": 0.062006889481076785,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16447,
+          "t_code": "12001",
+          "p_name": "사우어",
+          "year": "2026",
+          "K9": 1.8,
+          "BB9": 9,
+          "KBB": "0.2000",
+          "HR9": 1.8,
+          "OBP": 0.417,
+          "SLG": 0.444,
+          "OPS": 0.861
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16448": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16449": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16568": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10008": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10106": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10203": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10249": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10312": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10459": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10643": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10783": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11126": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11153": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11162": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11233": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11298": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11373": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11411": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12537": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12540": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12613": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12869": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12922": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13080": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13113": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13128": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13167": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13592": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14145": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14153": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14176": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14181": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14587": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14608": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14611": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14687": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14788": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14803": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14805": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14806": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14807": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15028": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15032": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15056": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15057": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15058": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15063": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15122": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15461": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15530": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16042": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16085": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16088": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16088,
+          "leagueType": 10100,
+          "t_code": "2002",
+          "p_name": "네일",
+          "year": "2026",
+          "p_nameEN": "James Aubrey Naile",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 6,
+          "ER": "0",
+          "R": "0",
+          "TBF": "21",
+          "H": "2",
+          "2B": "0",
+          "3B": "0",
+          "HR": "0",
+          "BB": "1",
+          "HP": "0",
+          "IB": "0",
+          "SO": "5",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "1",
+          "ERA": 0,
+          "FIP": 0,
+          "WHIP": 0.5,
+          "WAR": 0.4177435831694645,
+          "QS": "1",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16088,
+          "t_code": "2002",
+          "p_name": "네일",
+          "year": "2026",
+          "K9": 7.5,
+          "BB9": 1.5,
+          "KBB": "5.0000",
+          "HR9": 0,
+          "OBP": 0.143,
+          "SLG": 0.1,
+          "OPS": 0.243
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16252": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16261": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16289": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16321": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16324": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16324,
+          "leagueType": 10100,
+          "t_code": "9002",
+          "p_name": "화이트",
+          "year": "2026",
+          "p_nameEN": "Mitch White",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 4,
+          "ER": "5",
+          "R": "5",
+          "TBF": "23",
+          "H": "9",
+          "2B": "1",
+          "3B": "0",
+          "HR": "0",
+          "BB": "2",
+          "HP": "0",
+          "IB": "0",
+          "SO": "4",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 11.25,
+          "FIP": 0,
+          "WHIP": 2.75,
+          "WAR": -0.11306122900799999,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16324,
+          "t_code": "9002",
+          "p_name": "화이트",
+          "year": "2026",
+          "K9": 9,
+          "BB9": 4.5,
+          "KBB": "2.0000",
+          "HR9": 0,
+          "OBP": 0.478,
+          "SLG": 0.476,
+          "OPS": 0.954
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16344": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16425": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16446": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10014": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10170": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10182": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10261": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10557": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10870": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10913": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11215": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11222": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11225": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11244": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11334": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11414": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11425": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12516": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12539": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12585": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12858": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12860": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13094": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13168": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13941": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 13941,
+          "leagueType": 10100,
+          "t_code": "10001",
+          "p_name": "알칸타라",
+          "year": "2026",
+          "p_nameEN": "Raul Alcántara",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 5.1,
+          "ER": "3",
+          "R": "3",
+          "TBF": "24",
+          "H": "8",
+          "2B": "1",
+          "3B": "0",
+          "HR": "1",
+          "BB": "1",
+          "HP": "0",
+          "IB": "0",
+          "SO": "5",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "1",
+          "ERA": 5.06,
+          "FIP": 0,
+          "WHIP": 1.69,
+          "WAR": 0.08028907611096132,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 13941,
+          "t_code": "10001",
+          "p_name": "알칸타라",
+          "year": "2026",
+          "K9": 8.438,
+          "BB9": 1.688,
+          "KBB": "5.0000",
+          "HR9": 1.688,
+          "OBP": 0.375,
+          "SLG": 0.522,
+          "OPS": 0.897
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14125": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14196": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14591": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14707": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14708": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14809": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14811": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14849": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15014": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15015": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15068": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15071": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15132": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15421": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15422": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15472": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15475": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16108": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16110": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16114": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16118": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16121": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16122": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16301": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16328": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16330": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16407": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16414": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16415": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16421": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16421,
+          "leagueType": 10100,
+          "t_code": "7002",
+          "p_name": "에르난데스",
+          "year": "2026",
+          "p_nameEN": "Wilkel Hernandez",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 4.2,
+          "ER": "4",
+          "R": "4",
+          "TBF": "21",
+          "H": "4",
+          "2B": "1",
+          "3B": "0",
+          "HR": "0",
+          "BB": "4",
+          "HP": "0",
+          "IB": "0",
+          "SO": "3",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 7.71,
+          "FIP": 0,
+          "WHIP": 1.71,
+          "WAR": -0.01870296380313473,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16421,
+          "t_code": "7002",
+          "p_name": "에르난데스",
+          "year": "2026",
+          "K9": 5.786,
+          "BB9": 7.714,
+          "KBB": "0.7500",
+          "HR9": 0,
+          "OBP": 0.381,
+          "SLG": 0.294,
+          "OPS": 0.675
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16422": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16424": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16441": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16451": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16452": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16453": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10232": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10238": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10266": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10344": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10363": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10527": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10640": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10753": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10804": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10825": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10891": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10892": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10894": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10909": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11165": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11310": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11379": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11422": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11489": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12699": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12928": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12934": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12936": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12941": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13071": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13073": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13155": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13574": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14121": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14169": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14590": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14616": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14618": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14624": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14642": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14796": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15034": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15035": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15045": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15048": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15051": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15531": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 15531,
+          "leagueType": 10100,
+          "t_code": "1001",
+          "p_name": "후라도",
+          "year": "2026",
+          "p_nameEN": "Ariel Bolívar Jurado Agrazal",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "1",
+          "S": "0",
+          "HD": "0",
+          "IP": 6,
+          "ER": "3",
+          "R": "3",
+          "TBF": "25",
+          "H": "7",
+          "2B": "2",
+          "3B": "0",
+          "HR": "1",
+          "BB": "0",
+          "HP": "0",
+          "IB": "0",
+          "SO": "2",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 4.5,
+          "FIP": 0,
+          "WHIP": 1.17,
+          "WAR": 0.12073527930436792,
+          "QS": "1",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 15531,
+          "t_code": "1001",
+          "p_name": "후라도",
+          "year": "2026",
+          "K9": 3,
+          "BB9": 0,
+          "KBB": null,
+          "HR9": 1.5,
+          "OBP": 0.28,
+          "SLG": 0.5,
+          "OPS": 0.78
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15864": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16091": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16092": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16106": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16162": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16239": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16240": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16242": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16412": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16423": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16429": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16430": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16432": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16433": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16434": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 16434,
+          "leagueType": 10100,
+          "t_code": "3001",
+          "p_name": "로드리게스",
+          "year": "2026",
+          "p_nameEN": "Elvin Rodríguez",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "1",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 5,
+          "ER": "0",
+          "R": "0",
+          "TBF": "22",
+          "H": "2",
+          "2B": "0",
+          "3B": "0",
+          "HR": "0",
+          "BB": "5",
+          "HP": "0",
+          "IB": "0",
+          "SO": "4",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 0,
+          "FIP": 0,
+          "WHIP": 1.4,
+          "WAR": 0.34942723927556374,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 16434,
+          "t_code": "3001",
+          "p_name": "로드리게스",
+          "year": "2026",
+          "K9": 7.2,
+          "BB9": 9,
+          "KBB": "0.8000",
+          "HR9": 0,
+          "OBP": 0.318,
+          "SLG": 0.118,
+          "OPS": 0.436
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16455": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10165": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10189": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10195": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "10217": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11087": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11098": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11137": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11168": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11172": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11213": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11248": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11261": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11353": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 11353,
+          "leagueType": 10100,
+          "t_code": "11001",
+          "p_name": "구창모",
+          "year": "2026",
+          "p_nameEN": "Chang-Mo Koo",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "1",
+          "L": "0",
+          "S": "0",
+          "HD": "0",
+          "IP": 5,
+          "ER": "0",
+          "R": "0",
+          "TBF": "18",
+          "H": "2",
+          "2B": "1",
+          "3B": "0",
+          "HR": "0",
+          "BB": "1",
+          "HP": "0",
+          "IB": "0",
+          "SO": "3",
+          "ROE": "0",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 0,
+          "FIP": 0,
+          "WHIP": 0.6,
+          "WAR": 0.3460240502206172,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 11353,
+          "t_code": "11001",
+          "p_name": "구창모",
+          "year": "2026",
+          "K9": 5.4,
+          "BB9": 1.8,
+          "KBB": "3.0000",
+          "HR9": 0,
+          "OBP": 0.167,
+          "SLG": 0.176,
+          "OPS": 0.343
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "11355": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12524": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12549": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12850": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12852": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12894": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "12897": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13061": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13070": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13081": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13082": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13088": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13250": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "13261": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14220": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14221": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14575": {
+    "basic": {
+      "list": [
+        {
+          "p_no": 14575,
+          "leagueType": 10100,
+          "t_code": "6002",
+          "p_name": "플렉센",
+          "year": "2026",
+          "p_nameEN": "Chris Flexen",
+          "G": "1",
+          "GS": "1",
+          "GR": "0",
+          "GF": "0",
+          "CG": "0",
+          "SHO": "0",
+          "W": "0",
+          "L": "1",
+          "S": "0",
+          "HD": "0",
+          "IP": 4,
+          "ER": "2",
+          "R": "3",
+          "TBF": "21",
+          "H": "2",
+          "2B": "0",
+          "3B": "0",
+          "HR": "1",
+          "BB": "5",
+          "HP": "1",
+          "IB": "0",
+          "SO": "3",
+          "ROE": "2",
+          "BK": "0",
+          "WP": "0",
+          "ERA": 4.5,
+          "FIP": 0,
+          "WHIP": 1.75,
+          "WAR": 0.009165975699463083,
+          "QS": "0",
+          "p_position": 1
+        }
+      ]
+    },
+    "deepen": {
+      "list": [
+        {
+          "p_no": 14575,
+          "t_code": "6002",
+          "p_name": "플렉센",
+          "year": "2026",
+          "K9": 6.75,
+          "BB9": 11.25,
+          "KBB": "0.6000",
+          "HR9": 2.25,
+          "OBP": 0.381,
+          "SLG": 0.333,
+          "OPS": 0.714
+        }
+      ]
+    },
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14716": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14736": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14737": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14765": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14771": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14785": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "14829": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15099": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15111": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15115": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15127": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15253": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15508": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "15512": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16057": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16059": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16066": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16067": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16287": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16293": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16299": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16426": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16442": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16450": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16454": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16457": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16465": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  },
+  "16480": {
+    "result_cd": 100,
+    "result_msg": "성공"
+  }
+}

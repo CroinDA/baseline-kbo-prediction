@@ -1,0 +1,187 @@
+{
+  "sample_n": 30,
+  "correlations": {
+    "spring_wpct": {
+      "reg10_wpct": {
+        "pearson": -0.18782618307496407,
+        "spearman": -0.19717492158772104
+      },
+      "reg20_wpct": {
+        "pearson": -0.17218850872426386,
+        "spearman": -0.1855810711587872
+      },
+      "regfull_wpct": {
+        "pearson": 0.001946877523568442,
+        "spearman": 0.029211730923887708
+      },
+      "regfull_rd_pg": {
+        "pearson": 0.0108387870610017,
+        "spearman": 0.04789489686993238
+      },
+      "regfull_pyth": {
+        "pearson": 0.007375884324650687,
+        "spearman": 0.032523976479116874
+      }
+    },
+    "spring_rs_pg": {
+      "reg10_wpct": {
+        "pearson": 0.05577099323246633,
+        "spearman": 0.04356712390434839
+      },
+      "reg20_wpct": {
+        "pearson": -0.03353515787282423,
+        "spearman": -0.059763395796897566
+      },
+      "regfull_wpct": {
+        "pearson": -0.09683133253759818,
+        "spearman": -0.13457465353103995
+      },
+      "regfull_rd_pg": {
+        "pearson": 0.02064910897495224,
+        "spearman": 0.05257300307583276
+      },
+      "regfull_pyth": {
+        "pearson": 0.0015680345641717974,
+        "spearman": 0.03920698534468884
+      }
+    },
+    "spring_ra_pg": {
+      "reg10_wpct": {
+        "pearson": 0.13568194901466551,
+        "spearman": 0.10600429679078141
+      },
+      "reg20_wpct": {
+        "pearson": 0.11072776698374945,
+        "spearman": 0.11087792104542814
+      },
+      "regfull_wpct": {
+        "pearson": -0.29130317004193773,
+        "spearman": -0.28748057210627237
+      },
+      "regfull_rd_pg": {
+        "pearson": -0.22341391655809387,
+        "spearman": -0.19583844420394664
+      },
+      "regfull_pyth": {
+        "pearson": -0.22714644923078867,
+        "spearman": -0.18426617250098615
+      }
+    },
+    "spring_rd_pg": {
+      "reg10_wpct": {
+        "pearson": -0.058249355342586656,
+        "spearman": -0.05027067838855358
+      },
+      "reg20_wpct": {
+        "pearson": -0.10168095255002119,
+        "spearman": -0.09834160840500378
+      },
+      "regfull_wpct": {
+        "pearson": 0.14074864988071395,
+        "spearman": 0.11766017370406245
+      },
+      "regfull_rd_pg": {
+        "pearson": 0.17295778203148282,
+        "spearman": 0.20525383028036487
+      },
+      "regfull_pyth": {
+        "pearson": 0.16254146201330313,
+        "spearman": 0.19234198412389938
+      }
+    },
+    "spring_pyth": {
+      "reg10_wpct": {
+        "pearson": -0.061618356578345836,
+        "spearman": -0.05573800104104344
+      },
+      "reg20_wpct": {
+        "pearson": -0.09009667325586421,
+        "spearman": -0.10614086091949987
+      },
+      "regfull_wpct": {
+        "pearson": 0.15750405396933098,
+        "spearman": 0.1496659836671498
+      },
+      "regfull_rd_pg": {
+        "pearson": 0.2104152152272084,
+        "spearman": 0.2732228295914586
+      },
+      "regfull_pyth": {
+        "pearson": 0.205096079179174,
+        "spearman": 0.260318168258963
+      }
+    }
+  },
+  "top_abs_pearson_pairs": [
+    {
+      "source": "spring_ra_pg",
+      "target": "regfull_wpct",
+      "abs_pearson": 0.29130317004193773,
+      "pearson": -0.29130317004193773,
+      "spearman": -0.28748057210627237
+    },
+    {
+      "source": "spring_ra_pg",
+      "target": "regfull_pyth",
+      "abs_pearson": 0.22714644923078867,
+      "pearson": -0.22714644923078867,
+      "spearman": -0.18426617250098615
+    },
+    {
+      "source": "spring_ra_pg",
+      "target": "regfull_rd_pg",
+      "abs_pearson": 0.22341391655809387,
+      "pearson": -0.22341391655809387,
+      "spearman": -0.19583844420394664
+    },
+    {
+      "source": "spring_pyth",
+      "target": "regfull_rd_pg",
+      "abs_pearson": 0.2104152152272084,
+      "pearson": 0.2104152152272084,
+      "spearman": 0.2732228295914586
+    },
+    {
+      "source": "spring_pyth",
+      "target": "regfull_pyth",
+      "abs_pearson": 0.205096079179174,
+      "pearson": 0.205096079179174,
+      "spearman": 0.260318168258963
+    },
+    {
+      "source": "spring_wpct",
+      "target": "reg10_wpct",
+      "abs_pearson": 0.18782618307496407,
+      "pearson": -0.18782618307496407,
+      "spearman": -0.19717492158772104
+    },
+    {
+      "source": "spring_rd_pg",
+      "target": "regfull_rd_pg",
+      "abs_pearson": 0.17295778203148282,
+      "pearson": 0.17295778203148282,
+      "spearman": 0.20525383028036487
+    },
+    {
+      "source": "spring_wpct",
+      "target": "reg20_wpct",
+      "abs_pearson": 0.17218850872426386,
+      "pearson": -0.17218850872426386,
+      "spearman": -0.1855810711587872
+    },
+    {
+      "source": "spring_rd_pg",
+      "target": "regfull_pyth",
+      "abs_pearson": 0.16254146201330313,
+      "pearson": 0.16254146201330313,
+      "spearman": 0.19234198412389938
+    },
+    {
+      "source": "spring_pyth",
+      "target": "regfull_wpct",
+      "abs_pearson": 0.15750405396933098,
+      "pearson": 0.15750405396933098,
+      "spearman": 0.1496659836671498
+    }
+  ]
+}

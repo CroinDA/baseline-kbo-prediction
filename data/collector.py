@@ -261,8 +261,50 @@ def submit_prediction(s_no: int, percent: float) -> dict:
     if percent == 50.00:
         raise ValueError("50.00%는 대회 규정상 실패 처리됩니다.")
 
-    return _request(
-        "POST",
-        "save_prediction",
-        json_body={"s_no": s_no, "percent": percent},
-    )
+    # savePrediction은 JSON 서명이 아니라 빈 payload 서명 + form body를 요구한다.
+    endpoint_path = ENDPOINTS["save_prediction"]
+    url = BASE_URL + endpoint_path
+    api_key = get_api_key()
+    timestamp, signature = generate_signature("POST", endpoint_path, None)
+    headers = {
+        "X-API-KEY": api_key,
+        "X-TIMESTAMP": timestamp,
+        "X-SIGNATURE": signature,
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+    form_body = {"s_no": s_no, "percent": percent}
+
+    global _last_request_time
+    for attempt in range(1, MAX_RETRIES + 1):
+        elapsed = time.time() - _last_request_time
+        if elapsed < REQUEST_DELAY_SEC:
+            time.sleep(REQUEST_DELAY_SEC - elapsed)
+
+        try:
+            _last_request_time = time.time()
+
+            if attempt > 1:
+                timestamp, signature = generate_signature("POST", endpoint_path, None)
+                headers["X-TIMESTAMP"] = timestamp
+                headers["X-SIGNATURE"] = signature
+
+            resp = requests.post(url, headers=headers, data=form_body, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+
+            result_cd = data.get("result_cd")
+            if result_cd and result_cd != 100:
+                logger.warning(
+                    "API 응답 코드: %s — %s", result_cd, data.get("result_msg")
+                )
+
+            return data
+
+        except requests.exceptions.RequestException as e:
+            logger.warning("요청 실패 (시도 %d/%d): %s", attempt, MAX_RETRIES, e)
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_BACKOFF_SEC * attempt)
+            else:
+                raise
+
+    return {}

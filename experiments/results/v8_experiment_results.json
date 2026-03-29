@@ -1,0 +1,355 @@
+{
+  "stage0": {
+    "mean_accuracy": 0.5711,
+    "mean_accuracy_tuned": 0.5864,
+    "mean_threshold": 0.486,
+    "mean_logloss": 0.6852,
+    "mean_dz_count": 42.8,
+    "mean_dz_accuracy": 0.5099,
+    "folds": [
+      {
+        "fold": 1,
+        "accuracy": 0.5467,
+        "accuracy_tuned": 0.5552,
+        "threshold": 0.45,
+        "logloss": 0.6983,
+        "deadzone_count": 35,
+        "deadzone_accuracy": 0.5143
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.5326,
+        "accuracy_tuned": 0.5581,
+        "threshold": 0.455,
+        "logloss": 0.7052,
+        "deadzone_count": 53,
+        "deadzone_accuracy": 0.5283
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.5581,
+        "accuracy_tuned": 0.5807,
+        "threshold": 0.545,
+        "logloss": 0.6844,
+        "deadzone_count": 43,
+        "deadzone_accuracy": 0.5581
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.6431,
+        "accuracy_tuned": 0.6487,
+        "threshold": 0.495,
+        "logloss": 0.6571,
+        "deadzone_count": 47,
+        "deadzone_accuracy": 0.5319
+      },
+      {
+        "fold": 5,
+        "accuracy": 0.5751,
+        "accuracy_tuned": 0.5892,
+        "threshold": 0.485,
+        "logloss": 0.6809,
+        "deadzone_count": 36,
+        "deadzone_accuracy": 0.4167
+      }
+    ]
+  },
+  "stage1": {
+    "result": {
+      "mean_accuracy": 0.5711,
+      "mean_accuracy_tuned": 0.5864,
+      "mean_threshold": 0.486,
+      "mean_logloss": 0.6852,
+      "mean_dz_count": 42.8,
+      "mean_dz_accuracy": 0.5099,
+      "folds": [
+        {
+          "fold": 1,
+          "accuracy": 0.5467,
+          "accuracy_tuned": 0.5552,
+          "threshold": 0.45,
+          "logloss": 0.6983,
+          "deadzone_count": 35,
+          "deadzone_accuracy": 0.5143
+        },
+        {
+          "fold": 2,
+          "accuracy": 0.5326,
+          "accuracy_tuned": 0.5581,
+          "threshold": 0.455,
+          "logloss": 0.7052,
+          "deadzone_count": 53,
+          "deadzone_accuracy": 0.5283
+        },
+        {
+          "fold": 3,
+          "accuracy": 0.5581,
+          "accuracy_tuned": 0.5807,
+          "threshold": 0.545,
+          "logloss": 0.6844,
+          "deadzone_count": 43,
+          "deadzone_accuracy": 0.5581
+        },
+        {
+          "fold": 4,
+          "accuracy": 0.6431,
+          "accuracy_tuned": 0.6487,
+          "threshold": 0.495,
+          "logloss": 0.6571,
+          "deadzone_count": 47,
+          "deadzone_accuracy": 0.5319
+        },
+        {
+          "fold": 5,
+          "accuracy": 0.5751,
+          "accuracy_tuned": 0.5892,
+          "threshold": 0.485,
+          "logloss": 0.6809,
+          "deadzone_count": 36,
+          "deadzone_accuracy": 0.4167
+        }
+      ]
+    },
+    "optimal_threshold": 0.486
+  },
+  "stage2": {
+    "mean_accuracy": 0.5711,
+    "mean_accuracy_tuned": 0.5864,
+    "mean_threshold": 0.486,
+    "mean_logloss": 0.6852,
+    "mean_dz_count": 42.8,
+    "mean_dz_accuracy": 0.5099,
+    "folds": [
+      {
+        "fold": 1,
+        "accuracy": 0.5467,
+        "accuracy_tuned": 0.5552,
+        "threshold": 0.45,
+        "logloss": 0.6983,
+        "deadzone_count": 35,
+        "deadzone_accuracy": 0.5143
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.5326,
+        "accuracy_tuned": 0.5581,
+        "threshold": 0.455,
+        "logloss": 0.7052,
+        "deadzone_count": 53,
+        "deadzone_accuracy": 0.5283
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.5581,
+        "accuracy_tuned": 0.5807,
+        "threshold": 0.545,
+        "logloss": 0.6844,
+        "deadzone_count": 43,
+        "deadzone_accuracy": 0.5581
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.6431,
+        "accuracy_tuned": 0.6487,
+        "threshold": 0.495,
+        "logloss": 0.6571,
+        "deadzone_count": 47,
+        "deadzone_accuracy": 0.5319
+      },
+      {
+        "fold": 5,
+        "accuracy": 0.5751,
+        "accuracy_tuned": 0.5892,
+        "threshold": 0.485,
+        "logloss": 0.6809,
+        "deadzone_count": 36,
+        "deadzone_accuracy": 0.4167
+      }
+    ],
+    "scheme": null,
+    "weights": null,
+    "note": "no improvement"
+  },
+  "stage3": {
+    "mean_accuracy": 0.5683,
+    "mean_accuracy_tuned": 0.5887,
+    "mean_threshold": 0.495,
+    "mean_logloss": 0.6853,
+    "mean_dz_count": 23.8,
+    "mean_dz_accuracy": 0.4868,
+    "folds": [
+      {
+        "fold": 1,
+        "accuracy": 0.5552,
+        "accuracy_tuned": 0.5666,
+        "threshold": 0.495,
+        "logloss": 0.6976,
+        "deadzone_count": 17,
+        "deadzone_accuracy": 0.5882
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.5269,
+        "accuracy_tuned": 0.5581,
+        "threshold": 0.455,
+        "logloss": 0.7054,
+        "deadzone_count": 32,
+        "deadzone_accuracy": 0.4688
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.5382,
+        "accuracy_tuned": 0.5807,
+        "threshold": 0.545,
+        "logloss": 0.6855,
+        "deadzone_count": 25,
+        "deadzone_accuracy": 0.36
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.6459,
+        "accuracy_tuned": 0.6487,
+        "threshold": 0.515,
+        "logloss": 0.6566,
+        "deadzone_count": 29,
+        "deadzone_accuracy": 0.5172
+      },
+      {
+        "fold": 5,
+        "accuracy": 0.5751,
+        "accuracy_tuned": 0.5892,
+        "threshold": 0.465,
+        "logloss": 0.6816,
+        "deadzone_count": 16,
+        "deadzone_accuracy": 0.5
+      }
+    ],
+    "push": 0.02
+  },
+  "stage4": {
+    "mean_accuracy": 0.5751,
+    "mean_accuracy_tuned": 0.5938,
+    "mean_threshold": 0.507,
+    "mean_logloss": 0.6827,
+    "mean_dz_count": 30.0,
+    "mean_dz_accuracy": 0.5596,
+    "folds": [
+      {
+        "fold": 1,
+        "accuracy": 0.5666,
+        "accuracy_tuned": 0.5666,
+        "threshold": 0.5,
+        "logloss": 0.6914,
+        "deadzone_count": 30,
+        "deadzone_accuracy": 0.5333
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.5552,
+        "accuracy_tuned": 0.5807,
+        "threshold": 0.465,
+        "logloss": 0.6951,
+        "deadzone_count": 25,
+        "deadzone_accuracy": 0.6
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.5269,
+        "accuracy_tuned": 0.5892,
+        "threshold": 0.535,
+        "logloss": 0.6874,
+        "deadzone_count": 34,
+        "deadzone_accuracy": 0.4706
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.6204,
+        "accuracy_tuned": 0.6261,
+        "threshold": 0.535,
+        "logloss": 0.6631,
+        "deadzone_count": 40,
+        "deadzone_accuracy": 0.575
+      },
+      {
+        "fold": 5,
+        "accuracy": 0.6062,
+        "accuracy_tuned": 0.6062,
+        "threshold": 0.5,
+        "logloss": 0.6766,
+        "deadzone_count": 21,
+        "deadzone_accuracy": 0.619
+      }
+    ],
+    "best_params": {
+      "max_depth": 9,
+      "learning_rate": 0.00678588364587712,
+      "n_estimators": 466,
+      "subsample": 0.557905731867409,
+      "colsample_bytree": 0.2652403976001444,
+      "min_child_weight": 9,
+      "reg_lambda": 1.81724222018216,
+      "reg_alpha": 0.48982862356202617,
+      "gamma": 1.9808879563948736,
+      "objective": "binary:logistic",
+      "eval_metric": "logloss",
+      "random_state": 42,
+      "verbosity": 0
+    },
+    "adopted": true
+  },
+  "stage5": {
+    "mean_accuracy": 0.5751,
+    "mean_accuracy_tuned": 0.5938,
+    "mean_threshold": 0.507,
+    "mean_logloss": 0.6827,
+    "mean_dz_count": 30.0,
+    "mean_dz_accuracy": 0.5596,
+    "folds": [
+      {
+        "fold": 1,
+        "accuracy": 0.5666,
+        "accuracy_tuned": 0.5666,
+        "threshold": 0.5,
+        "logloss": 0.6914,
+        "deadzone_count": 30,
+        "deadzone_accuracy": 0.5333
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.5552,
+        "accuracy_tuned": 0.5807,
+        "threshold": 0.465,
+        "logloss": 0.6951,
+        "deadzone_count": 25,
+        "deadzone_accuracy": 0.6
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.5269,
+        "accuracy_tuned": 0.5892,
+        "threshold": 0.535,
+        "logloss": 0.6874,
+        "deadzone_count": 34,
+        "deadzone_accuracy": 0.4706
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.6204,
+        "accuracy_tuned": 0.6261,
+        "threshold": 0.535,
+        "logloss": 0.6631,
+        "deadzone_count": 40,
+        "deadzone_accuracy": 0.575
+      },
+      {
+        "fold": 5,
+        "accuracy": 0.6062,
+        "accuracy_tuned": 0.6062,
+        "threshold": 0.5,
+        "logloss": 0.6766,
+        "deadzone_count": 21,
+        "deadzone_accuracy": 0.619
+      }
+    ]
+  }
+}

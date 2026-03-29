@@ -15,6 +15,9 @@ venv/
 # Data
 data/raw/*.csv
 data/raw/*.parquet
+data/raw/batter_days_*.json
+data/raw/pitcher_days_*.json
+data/raw/automation/
 
 # Models
 models/saved/*.json

@@ -1,0 +1,56 @@
+[
+  {
+    "label": "v65-control",
+    "rows": 2121,
+    "features": 219,
+    "accuracy": 0.5579,
+    "accuracy_tuned": 0.5805,
+    "threshold": 0.487,
+    "logloss": 0.6828
+  },
+  {
+    "label": "v7-no-mirror",
+    "rows": 2116,
+    "features": 47,
+    "accuracy": 0.5381,
+    "accuracy_tuned": 0.5488,
+    "threshold": 0.49,
+    "logloss": 0.7327
+  },
+  {
+    "label": "v7-mirror",
+    "rows": 4232,
+    "features": 47,
+    "accuracy": 0.5277,
+    "accuracy_tuned": 0.5356,
+    "threshold": 0.463,
+    "logloss": 0.7234
+  },
+  {
+    "label": "v7-mirror-no-elo",
+    "rows": 4232,
+    "features": 44,
+    "accuracy": 0.528,
+    "accuracy_tuned": 0.5371,
+    "threshold": 0.535,
+    "logloss": 0.7231
+  },
+  {
+    "label": "v7-mirror-depth4",
+    "rows": 4232,
+    "features": 47,
+    "accuracy": 0.5277,
+    "accuracy_tuned": 0.5394,
+    "threshold": 0.45,
+    "logloss": 0.7184
+  },
+  {
+    "label": "v7-mirror-depth6",
+    "rows": 4232,
+    "features": 47,
+    "accuracy": 0.5277,
+    "accuracy_tuned": 0.5397,
+    "threshold": 0.482,
+    "logloss": 0.7287
+  }
+]

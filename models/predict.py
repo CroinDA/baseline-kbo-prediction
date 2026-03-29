@@ -19,7 +19,6 @@ from config.constants import (
     SUBMIT_DECIMAL_PLACES,
 )
 from elo.engine import EloEngine
-from features.builder import GameFeatures
 
 logger = logging.getLogger(__name__)
 
@@ -76,15 +75,22 @@ def avoid_forbidden(prob: float, elo_direction: float) -> float:
 def predict_game(
     elo_engine: EloEngine,
     xgb_model: Optional[xgb.XGBClassifier],
-    features: GameFeatures,
+    features,
     home_team: int,
     away_team: int,
     home_sp: Optional[int] = None,
     away_sp: Optional[int] = None,
+    threshold: float = 0.5,
+    deadzone_push: float = 0.0,
 ) -> float:
     """단일 경기 홈팀 승리 확률 예측.
 
     Elo 확률과 XGBoost 확률을 가중 평균.
+
+    Args:
+        features: 피처 벡터 (list[float] 또는 to_list() 가진 객체)
+        threshold: v8 threshold correction (0.5 = 보정 없음)
+        deadzone_push: v8 dead zone push 강도 (0-1 스케일, 예: 0.02 = 2%p)
 
     Returns:
         홈팀 승리 확률 (0~100 스케일, 소수점 둘째 자리)
@@ -98,8 +104,13 @@ def predict_game(
 
     # ── Layer 2: XGBoost 예측 ──
     if xgb_model is not None:
-        X = np.array([features.to_list()])
+        feat_list = features.to_list() if hasattr(features, 'to_list') else features
+        X = np.array([feat_list])
         xgb_prob = xgb_model.predict_proba(X)[0, 1]
+        # v8: threshold correction — shift so model threshold maps to 0.5
+        if threshold != 0.5:
+            xgb_prob += (0.5 - threshold)
+            xgb_prob = float(np.clip(xgb_prob, 0.01, 0.99))
         xgb_prob_pct = xgb_prob * 100.0
     else:
         # XGBoost 모델이 없으면 Elo만 사용
@@ -112,14 +123,16 @@ def predict_game(
     blended = elo_weight * elo_prob_pct + xgb_weight * xgb_prob_pct
 
     # ── 콜드 스타트 Prior-Posterior 블렌딩 ──
-    # 시즌 초반에는 Prior(Elo 기반 사전 확률)에 더 의존
-    # Prior = Elo 순수 예측 (전시즌 데이터 기반, 안정적)
-    # Posterior = Elo+XGBoost 블렌딩 (현시즌 데이터 기반, 불안정)
     prior_w = get_prior_weight(elo_engine.games_played)
-    prior_pct = elo_prob_pct  # Prior = Elo 확률 (전시즌 레이팅 기반)
-    posterior_pct = blended    # Posterior = Elo+XGBoost 블렌딩
+    prior_pct = elo_prob_pct
+    posterior_pct = blended
 
     final_pct = prior_w * prior_pct + (1.0 - prior_w) * posterior_pct
+
+    # ── v8: Dead zone push ──
+    if deadzone_push > 0 and 48.0 <= final_pct <= 52.0:
+        push_pct = deadzone_push * 100.0
+        final_pct += push_pct * (1.0 if elo_direction >= 0 else -1.0)
 
     logger.debug(
         "Elo=%.2f%% (w=%.2f), XGB=%.2f%% (w=%.2f) → Blend=%.2f%%, "
@@ -138,12 +151,16 @@ def batch_predict(
     elo_engine: EloEngine,
     xgb_model: Optional[xgb.XGBClassifier],
     games: list[dict],
+    threshold: float = 0.5,
+    deadzone_push: float = 0.0,
 ) -> list[dict]:
     """여러 경기 일괄 예측.
 
     Args:
         games: [{"s_no": int, "home_team": int, "away_team": int,
                  "home_sp": int, "away_sp": int, "features": GameFeatures}, ...]
+        threshold: v8 threshold correction
+        deadzone_push: v8 dead zone push 강도
 
     Returns:
         [{"s_no": int, "percent": float}, ...]
@@ -158,6 +175,8 @@ def batch_predict(
             away_team=game["away_team"],
             home_sp=game.get("home_sp"),
             away_sp=game.get("away_sp"),
+            threshold=threshold,
+            deadzone_push=deadzone_push,
         )
         results.append({
             "s_no": game["s_no"],

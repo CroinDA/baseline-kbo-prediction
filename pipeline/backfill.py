@@ -138,6 +138,7 @@ def backfill_pitcher_seasons(years: list[int]):
     """주요 투수 시즌 기록 수집 → pitcher_seasons_{year}.json
 
     schedule에서 등장하는 선발 투수 목록 추출 후 조회.
+    API 응답에서 해당 연도 기록만 필터링하여 저장.
     """
     for year in years:
         schedule_file = DATA_DIR / f"schedules_{year}.json"
@@ -166,7 +167,9 @@ def backfill_pitcher_seasons(years: list[int]):
         for i, p_no in enumerate(sp_list):
             try:
                 resp = get_player_season(p_no, m2="pitching", year=year)
-                pitcher_data[p_no] = resp
+                filtered = _filter_year_records(resp, year)
+                if filtered.get("basic", {}).get("list"):
+                    pitcher_data[p_no] = filtered
             except Exception as e:
                 logger.warning("투수 %d 실패: %s", p_no, e)
 
@@ -225,11 +228,35 @@ def backfill_lineups(years: list[int]):
         logger.info("저장: %s (%d 경기)", out_file.name, len(lineups))
 
 
+def _filter_year_records(resp: dict, year: int) -> dict:
+    """API 응답에서 해당 연도 레코드만 필터링.
+
+    API가 전 시즌 기록을 반환하므로, 저장 전에 해당 연도만 남긴다.
+    """
+    filtered = {}
+    for section in ["basic", "deepen", "fielding"]:
+        section_data = resp.get(section)
+        if not section_data:
+            continue
+        if isinstance(section_data, dict) and "list" in section_data:
+            year_records = [
+                r for r in section_data["list"]
+                if str(r.get("year")) == str(year)
+            ]
+            if year_records:
+                filtered[section] = {"list": year_records}
+        else:
+            filtered[section] = section_data
+    filtered["result_cd"] = resp.get("result_cd", 100)
+    filtered["result_msg"] = resp.get("result_msg", "Success")
+    return filtered
+
+
 def backfill_batter_seasons(years: list[int]):
     """라인업에 등장하는 타자들의 시즌 기록 수집 → batter_seasons_{year}.json
 
     lineups 파일에서 타자 p_no 추출 후, playerSeason batting 조회.
-    API 응답에 wRCplus(wRC+) 필드 포함.
+    API 응답에서 해당 연도 기록만 필터링하여 저장.
     """
     for year in years:
         lineup_file = DATA_DIR / f"lineups_{year}.json"
@@ -243,7 +270,6 @@ def backfill_batter_seasons(years: list[int]):
             continue
 
         # 라인업에서 고유 타자 ID 추출
-        # API 응답 구조: {팀코드: [선수배열], "result_cd": 100, ...}
         lineups = json.loads(lineup_file.read_text())
         batter_set = set()
         for s_no_str, resp in lineups.items():
@@ -261,7 +287,9 @@ def backfill_batter_seasons(years: list[int]):
         for i, p_no in enumerate(batter_list):
             try:
                 resp = get_player_season(p_no, m2="batting", year=year)
-                batter_data[str(p_no)] = resp
+                filtered = _filter_year_records(resp, year)
+                if filtered.get("basic", {}).get("list"):
+                    batter_data[str(p_no)] = filtered
             except Exception as e:
                 logger.warning("타자 %d 실패: %s", p_no, e)
 

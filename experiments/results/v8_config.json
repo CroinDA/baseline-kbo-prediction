@@ -1,0 +1,29 @@
+{
+  "params": {
+    "max_depth": 9,
+    "learning_rate": 0.00678588364587712,
+    "n_estimators": 466,
+    "subsample": 0.557905731867409,
+    "colsample_bytree": 0.2652403976001444,
+    "min_child_weight": 9,
+    "reg_lambda": 1.81724222018216,
+    "reg_alpha": 0.48982862356202617,
+    "gamma": 1.9808879563948736,
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "random_state": 42,
+    "verbosity": 0
+  },
+  "threshold": 0.507,
+  "sample_weights": null,
+  "deadzone_push": 0.02,
+  "elo_diff_feature_idx": 225,
+  "feature_count": 229,
+  "baseline_accuracy": 0.5711,
+  "baseline_tuned": 0.5864,
+  "v8_accuracy": 0.5751,
+  "v8_tuned": 0.5938,
+  "delta_from_default": 2.27,
+  "delta_from_tuned": 0.74,
+  "new_params_adopted": true
+}

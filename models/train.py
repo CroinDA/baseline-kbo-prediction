@@ -9,26 +9,30 @@ import logging
 from pathlib import Path
 from typing import Optional
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import numpy as np
 import xgboost as xgb
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import accuracy_score, brier_score_loss, log_loss
-
-from features.builder import GameFeatures
 
 logger = logging.getLogger(__name__)
 
 MODEL_DIR = Path(__file__).parent / "saved"
 MODEL_DIR.mkdir(exist_ok=True)
 
-# ── 보수적 하이퍼파라미터 ──
+# ── 하이퍼파라미터 (v2 159피처 Optuna 200t accuracy 최적화) ──
 XGB_PARAMS = {
-    "max_depth": 3,
-    "learning_rate": 0.03,
-    "n_estimators": 500,        # early stopping으로 실제 사용 수 결정
-    "subsample": 0.7,
-    "colsample_bytree": 0.7,
-    "min_child_weight": 10,
+    "max_depth": 9,
+    "learning_rate": 0.0093,
+    "n_estimators": 588,
+    "subsample": 0.54,
+    "colsample_bytree": 0.33,
+    "min_child_weight": 11,
+    "reg_lambda": 1.26,
+    "reg_alpha": 0.28,
+    "gamma": 0.77,
     "objective": "binary:logistic",
     "eval_metric": "logloss",
     "random_state": 42,
@@ -41,7 +45,7 @@ def train_model(
     y: np.ndarray,
     n_splits: int = 5,
     early_stopping_rounds: int = 30,
-    save_name: str = "xgb_model",
+    save_name: str = "xgb_v5",
 ) -> tuple[xgb.XGBClassifier, dict]:
     """XGBoost 학습 + 시계열 교차검증.
 
@@ -128,7 +132,7 @@ def train_model(
     return final_model, cv_results
 
 
-def load_model(save_name: str = "xgb_model") -> Optional[xgb.XGBClassifier]:
+def load_model(save_name: str = "xgb_v5") -> Optional[xgb.XGBClassifier]:
     """저장된 모델 로드."""
     model_path = MODEL_DIR / f"{save_name}.json"
     if not model_path.exists():
@@ -140,6 +144,7 @@ def load_model(save_name: str = "xgb_model") -> Optional[xgb.XGBClassifier]:
 
 
 if __name__ == "__main__":
+    import argparse
     import pandas as pd
 
     logging.basicConfig(
@@ -148,22 +153,31 @@ if __name__ == "__main__":
         handlers=[logging.StreamHandler()],
     )
 
+    parser = argparse.ArgumentParser(description="XGBoost 모델 학습")
+    parser.add_argument("--dataset", type=str, default="training_data_v2",
+                        help="데이터셋 이름 (기본: training_data_v2)")
+    parser.add_argument("--model-name", type=str, default=None,
+                        help="모델 저장 이름 (기본: 데이터셋 이름에서 자동)")
+    args = parser.parse_args()
+
     DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
-    parquet_path = DATA_DIR / "training_data.parquet"
-    csv_path = DATA_DIR / "training_data.csv"
+    parquet_path = DATA_DIR / f"{args.dataset}.parquet"
+    csv_path = DATA_DIR / f"{args.dataset}.csv"
 
     if parquet_path.exists():
         df = pd.read_parquet(parquet_path)
     elif csv_path.exists():
         df = pd.read_csv(csv_path)
     else:
-        logger.error("학습 데이터 없음. 먼저 build_dataset.py 실행 필요.")
+        logger.error("학습 데이터 없음: %s (.parquet/.csv)", args.dataset)
         raise SystemExit(1)
 
-    feature_cols = GameFeatures.feature_names()
+    # 피처 컬럼 = label 빼고 전부
+    feature_cols = [c for c in df.columns if c != "label"]
     X = df[feature_cols].values
     y = df["label"].values
 
-    logger.info("학습 데이터: %d행 × %d열", X.shape[0], X.shape[1])
-    model, results = train_model(X, y)
+    save_name = args.model_name or args.dataset.replace("training_data", "xgb")
+    logger.info("학습 데이터: %d행 × %d피처 (dataset=%s)", X.shape[0], X.shape[1], args.dataset)
+    model, results = train_model(X, y, save_name=save_name)
     logger.info("학습 완료. 모델 저장: %s", results["model_path"])
